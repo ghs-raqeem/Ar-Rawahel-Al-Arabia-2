@@ -1,0 +1,510 @@
+<?xml version="1.0"?>
+<odoo>
+
+
+	<!-- path views -->
+
+	<record id="path_form_view" model="ir.ui.view">
+		<field name="name">Path form</field>
+		<field name="model">freight_sys.trips.path</field>
+		<field name="arch" type="xml">
+			<form string="الرحلات الجزئية">
+				<sheet>
+					<group col="4" colspan="4">
+						<field name="name" />
+						<field name="route_id" />
+						<field name="trip_id" />
+						<field name="vehicle_id" />
+						<field name="driver_id" />
+						<field name="duration" />
+						<field name="hours_program" />
+						<field name="minutes_program" />
+						<field name="code_vehicle_ids">
+							<tree editable="bottom">
+								<field name="code_vehicle" />
+							</tree>
+						</field>
+					</group>
+					<group string="Policies" name="policies">
+						<field name="policy_ids">
+							<tree>
+								<field name="name" />
+								<field name="place_from" />
+								<field name="place_dest" />
+								<field name="state" />
+							</tree>
+						</field>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="path_tree_view" model="ir.ui.view">
+		<field name="name">Path tree</field>
+		<field name="model">freight_sys.trips.path</field>
+		<field name="arch" type="xml">
+			<tree string="الرحلات الجزئية">
+				<field name="route_id" />
+				<field name="trip_id" />
+				<field name="vehicle_id" />
+				<field name="driver_id" />
+				<field name="duration" />
+				<field name="hours_program" />
+				<field name="minutes_program" />
+
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="path_action" model="ir.actions.act_window">
+		<field name="name">الرحلات الجزئية</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.trips.path</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('trip_id', '=', active_id)]</field>
+		<field name="target">current</field>
+	</record>
+
+	<!-- trips transfert form views -->
+
+	<record id="trips_transfert_form_view" model="ir.ui.view">
+		<field name="name">trips.form</field>
+		<field name="model">freight_sys.trips</field>
+		<field name="arch" type="xml">
+			<form string="TRIPS">
+				<header>
+
+					<button name="confirm_route" string="Confirm Route"
+						type="object" class="oe_highlight"
+						attrs="{'invisible': [('state','=','arrived')]}" />
+					<!-- <button name="create_batch_load" string="Create Batch Load" type="object" 
+						attrs="{'invisible': [('state','=','arrived')]}"> <field name="count_pick_load" 
+						widget="statinfo" string="&#160;" readonly="1" /> </button> -->
+					<button name="terminate_trip" string="Terminate"
+						type="object" class="oe_highlight" icon="fa-power-off"
+						attrs="{'invisible': [('state','=','arrived')]}" />
+					<!-- <button name="button_confirm" states='draft' string="Validate" 
+						type="object" class="oe_highlight" /> -->
+					<field name="state" widget="statusbar" />
+				</header>
+				<sheet>
+
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" name="%(path_action)d"
+							type="action" icon="fa-braille">
+							<field string="الرحلات الجزئية" name="path_count"
+								widget="statinfo" />
+						</button>
+						<button type="object" name="action_view_batchs_loading"
+							class="oe_stat_button" icon=" fa-arrow-circle-up text-success">
+							<field name="count_batchs_load" widget="statinfo"
+								string="Batch Loading Pickings" />
+						</button>
+						<button type="object" name="action_view_batchs_downloading"
+							class="oe_stat_button" icon="fa-arrow-circle-down text-warning">
+							<field name="count_batchs_download" widget="statinfo"
+								string="Batch Downloading Pickings" />
+						</button>
+					</div>
+					<!-- <button class="oe_stat_button" name="action_view_twins_trip" string="Return 
+						Trip" attrs="{'invisible': ['|',('state','=','draft'),('type','=','return')]}" 
+						type="object" icon="fa-retweet"> </button> <button class="oe_stat_button" 
+						name="action_view_twins_trip" string="Going Trip" attrs="{'invisible': ['|',('state','=','draft'),('type','=','go')]}" 
+						type="object" icon="fa-retweet"> </button> <div class="oe_button_box" name="button_box"> 
+						<button name="toggle_type" type="object" class="oe_stat_button" icon="fa 
+						fa-exchange"> <field name="type" widget="boolean_button" options='{"terminology": 
+						{ "string_true": "GO", "hover_true": "RETURN", "string_false": "RETURN", 
+						"hover_false": "GO" }}' /> </button> </div> -->
+
+					<button name="create_batch_load" string="Create Batch Load"
+						type="object" class="btn-success"
+						attrs="{'invisible': [('count_pick_load','=',0)]}">
+						<![CDATA[&nbsp;]]><i class="fa fa-arrow-circle-up" /><![CDATA[&nbsp;]]>
+						(
+						<field name="count_pick_load" widget="statinfo" string=" " />
+						)
+					</button>
+					<button name="create_batch_download"
+						string="Create Batch Download" type="object" class="btn-warning"
+						attrs="{'invisible': [('count_pick_download','=',0)]}">
+						<![CDATA[&nbsp;]]><i class="fa fa-arrow-circle-down" /><![CDATA[&nbsp;]]>
+						(
+						<field name="count_pick_download" widget="statinfo"
+							string=" " />
+						)
+					</button>
+					<div class="row">
+						<div class="col-xs-9">
+							<h1>
+								<field name="name" readonly="1" />
+							</h1>
+						</div>
+					</div>
+					<div class="row">
+
+						<div class="col-xs-6">
+							<group string="PATH" name="path">
+								<field name="path_ids" nolabel="1">
+									<tree editable="bottom"
+										decoration-muted="(route_id!=c_line_id)"
+										decoration-info="(route_id==c_line_id)">
+										<!-- <field name="sequence" widget="handle"/> -->
+										<field name="route_id" />
+										<field name="c_line_id" invisible="1" />
+										<field name="duration" />
+									</tree>
+								</field>
+							</group>
+						</div>
+						<div class="col-xs-6">
+							<group string="General 
+						Informations">
+								<field name="vehicle_id" readonly="1" />
+								<field name="driver_id" readonly="1" />
+								<field name="type" readonly="1" />
+							</group>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<group string="">
+								<field name="route_id" />
+								<button name="update_policies" string="Update policies"
+									type="object" class="btn-info">
+						<![CDATA[&nbsp;]]><i class="fa fa-refresh" />
+								</button>
+								<field name="current_location" invisible="1" />
+							</group>
+						</div>
+						<div class="col-xs-4">
+							<group string="التحميل">
+								<field name="warehouse_load_ids"
+									widget="many2many_checkboxes" nolabel="1" />
+							</group>
+						</div>
+						<div class="col-xs-4">
+							<group string="التنزيل">
+								<field name="warehouse_download_ids"
+									widget="many2many_checkboxes" nolabel="1" />
+							</group>
+						</div>
+					</div>
+					<div>
+						<div class="row">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
+								<group col="4" colspan="4">
+									<field name="place_from" placeholder="From" />
+									<field name="place_to" placeholder="Destination" />
+
+								</group>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
+								<group col="4" colspan="4">
+									<field name="leaving_time" />
+									<field name="arrival_time" />
+								</group>
+							</div>
+						</div>
+					</div>
+
+					<group string="Policies" name="policies">
+						<field name="policy_ids">
+							<tree editable="bottom" delete="false">
+								<field name="name" />
+								<field name="place_from" />
+								<field name="place_dest" />
+								<field name="route_id" />
+								<field name="sender_id" />
+								<field name="recipient_id" />
+								<field name="state" />
+								<button name="delete_policy_from_trip"
+									string="Remove Policy from this trip" type="object"
+									icon="fa-remove text-danger"
+									confirm="Are you sure to remove this policy ?" />
+							</tree>
+						</field>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="trips_transfert_tree_view" model="ir.ui.view">
+		<field name="name">trips.tree</field>
+		<field name="model">freight_sys.trips</field>
+		<field name="arch" type="xml">
+			<tree string="Trips">
+				<field name="name" />
+				<field name="place_from" string="From" />
+				<field name="place_to" string="Destination" />
+				<field name="leaving_time" />
+				<field name="arrival_time" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="trips_search_view">
+		<field name="name">trips.search</field>
+		<field name="model">freight_sys.trips</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name" />
+				<field name="place_from" />
+				<field name="place_to" />
+				<field name="leaving_time" />
+				<field name="arrival_time" />
+				<group expand="0" string="Group By">
+					<!-- <filter name="group_type" string="By Type" context="{'group_by':'type'}" 
+						/> -->
+					<filter name="group_by_month" string="By month"
+						context="{'group_by':'leaving_time:month'}" />
+				</group>
+			</search>
+		</field>
+	</record>
+
+	<record id="trips_action_transfert"
+		model="ir.actions.act_window">
+		<field name="name">Transfert Trips</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.trips</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'default_type': 'transfert'}</field>
+		<field name="domain">[('type', '=', 'transfert')]</field>
+		<field name="search_view_id" ref="trips_search_view" />
+		<field name="target">current</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click to add a new trip.
+			</p>
+			<p>
+				Rawahel freight system helps you schedule and efficiently organize
+				your trips...
+			</p>
+		</field>
+	</record>
+	<record id="trip_transfert_tree"
+		model="ir.actions.act_window.view">
+		<field eval="1" name="sequence" />
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="trips_transfert_tree_view" />
+		<field name="act_window_id" ref="trips_action_transfert" />
+	</record>
+	<record id="trip_transfert_form"
+		model="ir.actions.act_window.view">
+		<field eval="2" name="sequence" />
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="trips_transfert_form_view" />
+		<field name="act_window_id" ref="trips_action_transfert" />
+	</record>
+
+
+	<!-- trips delivery form views -->
+
+	<record id="trips_delivery_form_view" model="ir.ui.view">
+		<field name="name">trips.form</field>
+		<field name="model">freight_sys.trips</field>
+		<field name="arch" type="xml">
+			<form string="TRIPS">
+				<header>
+
+					<button name="confirm_delivery_route"
+						string="Confirm Delivery" type="object" class="oe_highlight"
+						attrs="{'invisible': [('state','=','arrived')]}" />
+					<!-- <button name="create_batch_load" string="Create Batch Load" type="object" 
+						attrs="{'invisible': [('state','=','arrived')]}"> <field name="count_pick_load" 
+						widget="statinfo" string="&#160;" readonly="1" /> </button> -->
+					<button name="terminate_trip" string="Terminate"
+						type="object" class="oe_highlight" icon="fa-power-off"
+						attrs="{'invisible': [('state','=','arrived')]}" />
+					<!-- <button name="button_confirm" states='draft' string="Validate" 
+						type="object" class="oe_highlight" /> -->
+					<field name="state" widget="statusbar" />
+				</header>
+				<sheet>
+
+					<div class="oe_button_box" name="button_box">
+						<button type="object" name="action_view_batchs_loading"
+							class="oe_stat_button" icon=" fa-arrow-circle-up text-success">
+							<field name="count_batchs_load" widget="statinfo"
+								string="Batch Loading Pickings" />
+						</button>
+						<!-- <button type="object" name="action_view_batchs_downloading" class="oe_stat_button" 
+							icon="fa-arrow-circle-down text-warning"> <field name="count_batchs_download" 
+							widget="statinfo" string="Batch Downloading Pickings" /> </button> -->
+					</div>
+					<!-- <button class="oe_stat_button" name="action_view_twins_trip" string="Return 
+						Trip" attrs="{'invisible': ['|',('state','=','draft'),('type','=','return')]}" 
+						type="object" icon="fa-retweet"> </button> <button class="oe_stat_button" 
+						name="action_view_twins_trip" string="Going Trip" attrs="{'invisible': ['|',('state','=','draft'),('type','=','go')]}" 
+						type="object" icon="fa-retweet"> </button> -->
+
+
+					<!-- <div class="oe_button_box" name="button_box"> <button name="toggle_type" 
+						type="object" class="oe_stat_button" icon="fa fa-exchange"> <field name="type" 
+						widget="boolean_button" options='{"terminology": { "string_true": "GO", "hover_true": 
+						"RETURN", "string_false": "RETURN", "hover_false": "GO" }}' /> </button> 
+						</div> -->
+
+					<button name="create_batch_load" string="Create Batch Load"
+						type="object" class="btn-success"
+						attrs="{'invisible': [('count_pick_load','=',0)]}">
+						<![CDATA[&nbsp;]]><i class="fa fa-arrow-circle-up" /><![CDATA[&nbsp;]]>
+						(
+						<field name="count_pick_load" widget="statinfo" string=" " />
+						)
+					</button>
+					<!-- <button name="create_batch_download" string="Create Batch Download" 
+						type="object" class="btn-warning" attrs="{'invisible': [('count_pick_download','=',0)]}"> 
+						<![CDATA[&nbsp;]]><i class="fa fa-arrow-circle-down" /><![CDATA[&nbsp;]]> 
+						( <field name="count_pick_download" widget="statinfo" string=" " /> ) </button> -->
+					<div class="row">
+						<div class="col-xs-9">
+							<h1>
+								<field name="name" readonly="1" />
+							</h1>
+						</div>
+						<div class="col-xs-3">
+							<h3>
+								<label for="with_distribution" string="With Distribution" />
+								<field name="with_distribution" />
+							</h3>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6">
+							<group string="General 
+						Informations">
+								<field name="vehicle_id" />
+								<field name="code_vehicle" />
+								<field name="driver_id" />
+								<field name="type" readonly="1" />
+							</group>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">
+							<group string="">
+								<field name="route_id"
+									domain="[('reception_type','=','delivery')]" />
+								<field name="current_location" invisible="1" />
+							</group>
+						</div>
+					</div>
+					<div>
+						<div class="row">
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8">
+								<group col="4" colspan="4">
+									<field name="place_from" placeholder="From" />
+									<field name="place_to" placeholder="Destination" />
+
+								</group>
+							</div>
+						</div>
+					</div>
+
+					<group string="Policies" name="policies">
+						<field name="policy_ids" widget='many2many'
+							options="{'no_create':True}"
+							domain="[('trip_id','=',False),('delivery','=',True),('current_location','=',current_location),('state','=','destination')]">
+							<tree editable="top" delete="false">
+								<field name="name" />
+								<field name="place_from" />
+								<field name="place_dest" />
+								<field name="route_id" />
+								<field name="sender_id" />
+								<field name="recipient_id" />
+								<field name="state" />
+								<button name="final_reception" string="Confirm Reception"
+									type="object" icon="fa-thumbs-o-up text-success"
+									attrs="{'invisible': [('state', 'not in', 
+									('to_delivery'))]}" />
+								<button name="return_policy" string="Confirm Return"
+									type="object" icon="fa-thumbs-o-down text-warning"
+									attrs="{'invisible': [('state', 'not in', 
+									('to_delivery'))]}" />
+								<button name="delete_policy_from_trip"
+									string="Remove Policy from this trip" type="object" confirm="Are you sure to remove this policy from this trip ?"
+									icon="fa-remove text-danger" />
+							</tree>
+						</field>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="trips_delivery_tree_view" model="ir.ui.view">
+		<field name="name">trips.tree</field>
+		<field name="model">freight_sys.trips</field>
+		<field name="arch" type="xml">
+			<tree string="Trips">
+				<field name="name" />
+				<field name="place_from" string="From" />
+				<field name="place_to" string="Destination" />
+				<field name="leaving_time" />
+				<field name="arrival_time" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="trips_delivery_search_view">
+		<field name="name">trips.search</field>
+		<field name="model">freight_sys.trips</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name" />
+				<field name="place_from" />
+				<field name="place_to" />
+
+			</search>
+		</field>
+	</record>
+
+	<record id="trips_action_delivery" model="ir.actions.act_window">
+		<field name="name">Delivery Trips</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.trips</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="context">{'default_type': 'delivery'}</field>
+		<field name="domain">[('type', '=', 'delivery')]</field>
+		<field name="search_view_id" ref="trips_delivery_search_view" />
+		<field name="target">current</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click to add a new trip.
+			</p>
+			<p>
+				Rawahel freight system helps you schedule and efficiently organize
+				your trips...
+			</p>
+		</field>
+	</record>
+	<record id="trip_delivery_tree"
+		model="ir.actions.act_window.view">
+		<field eval="1" name="sequence" />
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="trips_delivery_tree_view" />
+		<field name="act_window_id" ref="trips_action_delivery" />
+	</record>
+	<record id="trip_delivery_form"
+		model="ir.actions.act_window.view">
+		<field eval="2" name="sequence" />
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="trips_delivery_form_view" />
+		<field name="act_window_id" ref="trips_action_delivery" />
+	</record>
+
+
+
+</odoo>

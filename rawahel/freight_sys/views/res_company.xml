@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<record id="inherit_res_company" model="ir.ui.view">
+		<field name="name">inherit.res.company</field>
+		<field name="model">res.company</field>
+		<field name="inherit_id" ref="base.view_company_form" />
+		<field name="arch" type="xml">
+			<data>
+				<xpath expr="//notebook/page[1]" position="after">
+					<page string="Num tel Company" name="num_tel">
+						<group col="4" colspan="4">
+							<field name="riadh_tel"/>
+							<field name="jeddah_tel"/>
+							<field name="dammam_tel"/>
+							<field name="hfr_baten_tel"/>
+							<field name="aniza_tel"/>
+							<field name="brida_tel"/>
+							<field name="hail_tel"/>
+							<field name="Medina_tel"/>
+						</group>
+					</page>
+				</xpath>
+			</data>
+		</field>
+	</record>
+</odoo>

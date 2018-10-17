@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<odoo>
+
+	<!-- warehouse load form views -->
+
+	<record id="warehouse_load_form_view" model="ir.ui.view">
+		<field name="name">warehouse load</field>
+		<field name="model">freight_sys.trips.warehouse_load</field>
+		<field name="arch" type="xml">
+			<form string="warehouse load">
+				<sheet>
+					<div class="oe_title row">
+						<h3>
+							<field name="warehouse_id" />
+						</h3>
+					</div>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="warehouse_load_tree_view" model="ir.ui.view">
+		<field name="name">warehouse load</field>
+		<field name="model">freight_sys.trips.warehouse_load</field>
+		<field name="arch" type="xml">
+			<tree string="warehouse load">
+				<field name="warehouse_id" />
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="warehouse_load_action" model="ir.actions.act_window">
+		<field name="name">warehouse load</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.trips.warehouse_load</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="target">current</field>
+	</record>
+
+
+
+
+	<!-- warehouse_download form views -->
+
+	<record id="warehouse_download_form_view" model="ir.ui.view">
+		<field name="name">warehouse download</field>
+		<field name="model">freight_sys.trips.warehouse_download</field>
+		<field name="arch" type="xml">
+			<form string="warehouse download">
+				<sheet>
+					<div class="oe_title row">
+						<h3>
+							<field name="warehouse_id" />
+						</h3>
+					</div>
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="warehouse_download_tree_view" model="ir.ui.view">
+		<field name="name">warehouse download</field>
+		<field name="model">freight_sys.trips.warehouse_download</field>
+		<field name="arch" type="xml">
+			<tree string="warehouse download">
+				<field name="warehouse_id" />
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="warehouse_download_action" model="ir.actions.act_window">
+		<field name="name">warehouse download</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.trips.warehouse_download</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="target">current</field>
+	</record>
+
+	<menuitem id="menu_conf_warehouse_load" action="warehouse_load_action"
+		parent="menu_configuration" sequence="1" />
+	<menuitem id="menu_conf_warehouse_download" action="warehouse_download_action"
+		parent="menu_configuration" sequence="2" />
+
+</odoo>

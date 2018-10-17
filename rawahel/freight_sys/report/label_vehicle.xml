@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<record id="paperformat_label_vehicle_report" model="report.paperformat">
+			<field name="name">Label vahicle</field>
+			<field name="default" eval="True" />
+			<field name="format">custom</field>
+			<field name="page_height">80</field>
+			<field name="page_width">70</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">6</field>
+			<field name="margin_bottom">0</field>
+			<field name="margin_left">0</field>
+			<field name="margin_right">0</field>
+			<field name="header_line" eval="False" />
+			<field name="header_spacing">3</field>
+			<field name="dpi">80</field>
+		</record>
+		<report id="action_todo_report_label_vehicle" string="Vehicle Label"
+			model="fleet.vehicle" report_type="qweb-pdf" name="freight_sys.report_label_vehicle"
+			print_report_name="'Vehicle Label - %s' % (object.code)" paperformat="paperformat_label_vehicle_report" />
+
+
+		<template id="basic_layout">
+			<t t-call="web.html_container">
+				<div class="article">
+					<t t-raw="0" />
+				</div>
+			</t>
+		</template>
+
+		<template id="report_label_vehicle">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="vehicle">
+					<t t-call="freight_sys.basic_layout">
+						<div class="page">
+							<div style="padding:0;">
+								<table
+									style="border-spacing:0;margin-bottom:0;height:100%;width: 100%;"
+									class="table">
+
+									<tr style="width: 3in;">
+										<td
+											style="border: 2px solid black;width: 2.63in;text-align: center;" class="info">
+											<h3>
+												<strong t-field="vehicle.model_id" />
+
+											</h3>
+											<h4>
+												***&#160;
+												<strong t-field="vehicle.license_plate" />
+												&#160;***
+											</h4>
+										</td>
+									</tr>
+
+									<tr style="width: 1in;">
+										<td
+											style="border: 2px solid black;text-align: center; vertical-align: middle;">
+											<img t-if="vehicle.barcode"
+												t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', vehicle.barcode, 600, 150)"
+												style="width:100%;height:30%;" />
+											<span t-field="vehicle.barcode" />
+										</td>
+
+									</tr>
+									<tr>
+										<td
+											style="border: 2px solid black;text-align: center; vertical-align: middle;">
+											<span t-field="vehicle.code" />
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</t>
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="policy_view_inherit_vehicle" model="ir.ui.view">
+			<field name="name">vehicle.inherit.form.view</field>
+			<field name="model">fleet.vehicle</field>
+			<field name="inherit_id" ref="fleet.fleet_vehicle_view_form" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="driver_id" position="before">
+						<field name="code" />
+						<field name="barcode" readonly="1"/>
+						<field name="warehouse_id"/>
+					</field>
+				</data>
+			</field>
+		</record>
+	</data>
+</odoo>

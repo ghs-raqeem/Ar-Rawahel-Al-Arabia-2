@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="assets_frontend" name="project assets"
+			inherit_id="web.assets_frontend">
+			<xpath expr="." position="inside">
+				<link rel="stylesheet"
+					href="/theme_clean/static/src/css/rawahel.css" />
+			</xpath>
+		</template>
+		<template id="rawahel_language_selector"
+			inherit_id="website.language_selector"
+			name="rawahel_language_selector">
+			<xpath expr="//ul[1]" position="replace">
+				<li class="item-side">
+					<div id="lang-select">
+						<dropdown>
+							<input id="toggle2" type="checkbox" />
+							<label for="toggle2" class="animate">
+								<i class="fa fa-language" aria-hidden="true" />
+								Language
+								<i class="fa fa-chevron-down" aria-hidden="true" />
+							</label>
+							<ul class="animate">
+								<li class="animate" t-foreach="languages" t-as="lg">
+									<a
+										t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang=lg[0])"
+										t-att-data-default-lang="(editable or translatable) and 'true' if website and lg[0] == website.default_lang_code else None"
+										t-att-data-lang="lg[0]" class="js_change_lang">
+										<t t-esc="lg[1].split('/').pop()" />
+									</a>
+								</li>
+							</ul>
+						</dropdown>
+					</div>
+				</li>
+			</xpath>
+		</template>
+		<template id="rawahel_header" inherit_id="website.layout"
+			name="rawahel_header">
+			<xpath
+				expr="//header//ul[@id='top_menu']/li[hasclass('dropdown')]"
+				position="after">
+				<t t-call="website.language_selector"></t>
+			</xpath>
+		</template>
+		<template id="rawahel_footer" inherit_id="website.footer_default"
+			name="rawahel_footer">
+			<xpath
+				expr="//div[@id='footer']/div[1]/div[3]/t"
+				position="replace">
+				<t> </t>
+			</xpath>
+		</template>
+
+	</data>
+</odoo>
+<!-- <odoo> <data> <template id="assets_frontend" inherit_id="web.assets_frontend" 
+	name="Website Frontend Assets"> <xpath expr="//link[last()]" position="after"> 
+	<link rel="stylesheet" type="text/less" href="/website_rtl/static/src/css/website_rtl.css"/> 
+	</xpath> </template> </data> </odoo> -->

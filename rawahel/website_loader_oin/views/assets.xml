@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Odoo IT now: Inherited Assets Front-end to add css file -->
+    <template id="assets_frontend" name="odooitnow assets" inherit_id="web.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/website_loader_oin/static/src/css/website_preloader.css"/>
+        </xpath>
+    </template>
+
+</odoo>

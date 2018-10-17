@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- Sequences for policy nbr -->
+		<record id="seq_policy_nbr" model="ir.sequence">
+			<field name="name">Policy Nbr</field>
+			<field name="code">policy.nbr</field>
+			<field name="prefix">BN°</field>
+			<field name="padding">5</field>
+			<field eval="1" name="number_increment" />
+		</record>
+
+		<!-- Sequences for freight name -->
+		<record id="seq_freight_name" model="ir.sequence">
+			<field name="name">freight name</field>
+			<field name="code">freight.name</field>
+			<field name="prefix">PCK</field>
+			<field name="padding">1</field>
+			<field eval="1" name="number_increment" />
+		</record>
+
+		<!-- Sequences for trips name -->
+		<record id="seq_trips_name" model="ir.sequence">
+			<field name="name">Trips name</field>
+			<field name="code">trips.name</field>
+			<field name="prefix"></field>
+			<field name="padding">5</field>
+			<field eval="1" name="number_increment" />
+		</record>
+
+		<!-- Sequences for trips path name -->
+		<record id="seq_trips_path_name" model="ir.sequence">
+			<field name="name">Trips path name</field>
+			<field name="code">trips.path</field>
+			<field name="prefix"></field>
+			<field name="padding">5</field>
+			<field eval="1" name="number_increment" />
+		</record>
+
+	</data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+
+
+		<template id="web.external_layout_background">
+
+			<div class="header">
+				<center>
+					<img src="/raqeem_custom_report/static/src/img/header.jpg" />
+				</center>
+
+			</div>
+
+			<div class="article"
+				style="background-image:url(/raqeem_custom_report/static/src/img/body.jpg); background-size: cover;">
+				<t t-raw="0" />
+			</div>
+
+			<div class="footer">
+				<center>
+					<img src="/raqeem_custom_report/static/src/img/footer.jpg" />
+				</center>
+			</div>
+		</template>
+
+	</data>
+</odoo>

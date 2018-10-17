@@ -1,0 +1,64 @@
+/* Point of Sale font*/
+@font-face {
+  font-family: 'Stc Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/web_rtl/static/src/fonts/STC-Regular.eot);
+  src: url(/web_rtl/static/src/fonts/STC-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Stc Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/web_rtl/static/src/fonts/STC-Bold.eot);
+  src: url(/web_rtl/static/src/fonts/STC-Bold.ttf) format('truetype');
+}
+/*.pos,.pos button,.pos textarea,.pos .loader,.pos .searchbox input,.pos .pos-sale-ticket,.pos .pos-sale-ticket pre,
+.pos .scale-screen .computed-price{
+    font-family: 'Stc Arabic' !important;
+}*/
+*:not(.fa){
+    font-family: 'Stc Arabic' !important;
+}
+.pos-rightheader{
+    direction: initial;
+}
+.screen .screen-content{
+    text-align: right;
+}
+.pos .category-list {
+    text-align: right;
+}
+.pos .clientlist-screen .edit-buttons {
+    right: auto;
+    left: 10px;
+}
+.pos .clientlist-screen .client-picture{
+    float: right;
+}
+/*left =====> right*/
+.pos .clientlist-screen .client-details-left {
+    width: 50%;
+    float: right;
+}
+/*right =====> left*/
+.pos .clientlist-screen .client-details-right {
+    width: 50%;
+    float: left;
+}
+.pos .pos-sale-ticket {
+  text-align: right;
+}
+.pos .popup.popup-selection .selection-item {
+    text-align: right;
+}
+.pos .product-list {
+    text-align: center;
+}
+
+
+
+.pos .debug-widget h1{
+  padding-top: 20px;
+}

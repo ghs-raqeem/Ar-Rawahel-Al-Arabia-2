@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+	<!-- wizard validate policy -->
+
+	<record model="ir.ui.view" id="validate_policy_wizard_form">
+		<field name="name">Validate Policy wizard</field>
+		<field name="model">freight_sys.validate_policy_wizard</field>
+		<field name="arch" type="xml">
+			<form string="Policy Validation">
+				<div class="oe_title">
+					<h1>
+						<field name="policy_id" readonly="1"
+							options="{'no_open':True, 'no_quick_create':True, 'no_create_edit':True, 'no_create': True}" />
+					</h1>
+					<br></br>
+				</div>
+				<group col="4" colspan="4">
+					<field name="place_from" readonly="1" />
+					<field name="place_dest" readonly="1" />
+				</group>
+
+				<group string="General Informations" col="4" colspan="4">
+					<field name="content_ids" widget="many2many_tags"
+						options="{'color_field': 'color', 'no_create_edit': True}"
+						readonly="1">
+					</field>
+					<field name="goods_value" readonly="1" />
+					<field name="freight_count" readonly="1" />
+				</group>
+				<group string="Charges">
+					<field name="charge_line_ids" mode="tree,kanban" widget="one2many_list"
+						readonly="1">
+						<tree editable="bottom" readonly="1" delete="false" create="false">
+							<field name="sequence" widget="handle" readonly="1"
+								options="{'no_open':True, 'no_quick_create':True, 'no_create_edit':True, 'no_create': True}" />
+							<field name="charge_id" readonly="1"
+								options="{'no_open':True, 'no_quick_create':True, 'no_create_edit':True, 'no_create': True}" />
+							<field name="payee" readonly="1"
+								options="{'no_open':True, 'no_quick_create':True, 'no_create_edit':True, 'no_create': True}" />
+							<field name="company_currency" invisible="1" readonly="1" />
+							<field name="charge_price" widget='monetary' sum="Total charges"
+								options="{'currency_field': 'company_currency', 'no_open':True, 'no_quick_create':True, 'no_create_edit':True, 'no_create': True}"
+								readonly="1" />
+							<field name="state" readonly="1"
+								options="{'no_open':True, 'no_quick_create':True, 'no_create_edit':True, 'no_create': True}" />
+						</tree>
+					</field>
+				</group>
+				<div class="row">
+					<div class="col-xs-6">
+						<group name="sender" string="Sender informations">
+							<field name="sender_id" readonly="1"/>
+							<label for="street" string="Address" />
+							<div class="o_address_format">
+								<field name="sender_street" placeholder="Street..." class="o_address_street"
+									readonly="1" />
+								<field name="sender_street2" placeholder="Street 2..."
+									class="o_address_street" readonly="1" />
+								<field name="sender_city" placeholder="City" class="o_address_city"
+									readonly="1" />
+								<field name="sender_state_id" class="o_address_state"
+									placeholder="State" options="{&quot;no_open&quot;: True}"
+									readonly="1" />
+								<field name="sender_zip" placeholder="ZIP" class="o_address_zip"
+									readonly="1" />
+								<field name="sender_country_id" placeholder="Country"
+									class="o_address_country"
+									options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+									readonly="1" />
+							</div>
+							<field name="sender_phone" readonly="1" />
+							<field name="sender_mobile" readonly="1" />
+							<field name="sender_identif" readonly="1" />
+
+
+
+						</group>
+					</div>
+					<div class="col-xs-6 ">
+						<group name="recipient" string="Recipient informations">
+							<field name="recipient_id" readonly="1"/>
+							<label for="street" string="Address" />
+							<div class="o_address_format">
+								<field name="recipient_street" placeholder="Street..."
+									class="o_address_street" readonly="1" />
+								<field name="recipient_street2" placeholder="Street 2..."
+									class="o_address_street" readonly="1" />
+								<field name="recipient_city" placeholder="City" class="o_address_city"
+									readonly="1" />
+								<field name="recipient_state_id" class="o_address_state"
+									placeholder="State" options="{&quot;no_open&quot;: True}"
+									readonly="1" />
+								<field name="recipient_zip" placeholder="ZIP" class="o_address_zip"
+									readonly="1" />
+								<field name="recipient_country_id" placeholder="Country"
+									class="o_address_country"
+									options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+									readonly="1" />
+							</div>
+							<field name="recipient_phone" readonly="1" />
+							<field name="recipient_mobile" readonly="1" />
+							<field name="recipient_identif" readonly="1" />
+						</group>
+
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-2"></div>
+					<div class="col-xs-8">
+						<field name="sender_signature" widget="signature" required="1" />
+					</div>
+
+				</div>
+				<footer>
+					<button name="accept_policy" string="Accept Policy" type="object"
+						class="oe_highlight" icon="fa-check-circle" />
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_validate_policy_wizard" model="ir.actions.act_window">
+		<field name="name">Validate Policy Wizard</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.validate_policy_wizard</field>
+		<field name="src_model">freight_sys.policy</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="validate_policy_wizard_form" />
+		<field name="target">new</field>
+	</record>
+
+</odoo>
+	

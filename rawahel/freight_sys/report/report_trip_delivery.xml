@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<record id="paperformat_trip_delivery_report"
+		model="report.paperformat">
+		<field name="name">French Bank Check</field>
+		<field name="default" eval="True" />
+		<field name="format">custom</field>
+		<field name="page_height">150</field>
+		<field name="page_width">270</field>
+		<field name="orientation">Portrait</field>
+		<field name="margin_top">10</field>
+		<field name="margin_bottom">10</field>
+		<field name="margin_left">3</field>
+		<field name="margin_right">3</field>
+		<field name="header_line" eval="False" />
+		<field name="header_spacing">50</field>
+		<field name="dpi">80</field>
+	</record>
+
+	<report id="action_todo_trip_report" string="Print Trip"
+		model="freight_sys.trips" report_type="qweb-pdf"
+		name="freight_sys.report_trip_delivery_template"
+		print_report_name="'Trip - %s' % (object.route_id.name)"
+		paperformat="paperformat_trip_delivery_report" />
+
+
+
+
+	<template id="report_trip_delivery_template">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="trip">
+				<t t-call="web.external_layout">
+					<div class="page">
+						<link href="/freight_sys/static/src/css/report_trip.css"
+							rel="stylesheet" type="text/css" />
+						<div class="container-fluid" dir="rtl">
+							<div class="col-xs-4"></div>
+							<div class="col-xs-4">
+								<h2 class="text-center">تقرير الرحلة</h2>
+							</div>
+							<br></br>
+							<br></br>
+							<br></br>
+							<section id="my-row" class="row">
+								<div class="col-xs-4 panel box">
+									<section style="padding:20 5;">
+										رقم الرحلة:
+											<![CDATA[&nbsp;]]>
+										<span class="input_info1" t-field="trip.name"></span>
+									</section>
+
+								</div>
+								<div class="col-xs-4 panel box">
+									<section style="padding:20 5;">
+										عدد البوليصات:
+											<![CDATA[&nbsp;]]>
+										<span class="input_info1" t-esc="len(trip.policy_ids)" />
+									</section>
+
+								</div>
+								<div class="col-xs-4 panel box">
+									<section style="padding:20 5;">
+										عدد الشحنات:
+											<![CDATA[&nbsp;]]>
+										<span class="input_info1"
+											t-esc="sum([o.freight_count for o in trip.policy_ids])" />
+									</section>
+
+								</div>
+							</section>
+							<section id="my-row" class="row">
+
+								<div class="col-xs-7 panel box">
+									<section class="row" style="padding:20 5;">
+										<div class="col-xs-5">
+											من
+											<br />
+											<span class="input_info"
+												t-field="trip.route_id.place_from"></span>
+											<br />
+										</div>
+										<div class="col-xs-2 input_info">
+											<i class="fa fa-chevron-left"
+												style="font-size:15px;color:red"></i>
+											<i class="fa fa-chevron-left"
+												style="font-size:15px;color:red"></i>
+										</div>
+										<div class="col-xs-5" style="text-align:left;">
+											إلى
+											<br />
+											<span class="input_info"
+												t-field="trip.route_id.place_dest"></span>
+											<br />
+										</div>
+									</section>
+
+								</div>
+								<div class="col-xs-5 panel box">
+									<section class="row" style="padding:20 5;">
+										<div>
+											السيارة:
+											<![CDATA[&nbsp;]]>
+											<![CDATA[&nbsp;]]>
+											<span class="input_info" t-field="trip.vehicle_id.name"></span>
+										</div>
+										<br />
+										<!-- <div> كود السيارة: <![CDATA[&nbsp;]]> <![CDATA[&nbsp;]]> <div 
+											id="example1" style="display:inline;" t-foreach="trip.code_vehicle_ids" t-as="code"> 
+											<span t-esc="code.code_vehicle" /> </div> </div> -->
+										<br />
+										<div>
+											السائق:
+											<![CDATA[&nbsp;]]>
+											<![CDATA[&nbsp;]]>
+											<span class="input_info" t-field="trip.driver_id.name"></span>
+										</div>
+									</section>
+
+								</div>
+							</section>
+							<br></br>
+							<br></br>
+							<br></br>
+							<!-- <div class="row"> <div class="col-xs-6"> عدد البوليصات: <![CDATA[&nbsp;]]> 
+								<![CDATA[&nbsp;]]> <span t-esc="len(trip.policy_ids)" /> </div> <div class="col-xs-6"> 
+								عدد الشحنات: <![CDATA[&nbsp;]]> <![CDATA[&nbsp;]]> <t t-esc="sum([o.freight_count 
+								for o in trip.policy_ids])" /> </div> </div> -->
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th>رقم البوليصة</th>
+										<th>المرسل</th>
+										<th>جوال المرسل</th>
+										<th>المستلم</th>
+										<th>جوال المستلم</th>
+										<th>عدد الطرود</th>
+										<th>المحتوى</th>
+										<th>الفرع المصدر</th>
+										<th>الفرع الوجهة</th>
+										<th>التوقيع</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr t-foreach="trip.policy_ids" t-as="policy">
+										<td class="input_info">
+											<span t-field="policy.name" />
+										</td>
+										<td class="input_info">
+											<span t-field="policy.sender_id.name" />
+										</td>
+										<td class="input_info">
+											<span t-field="policy.sender_mobile" />
+										</td>
+										<td class="input_info">
+											<span t-field="policy.recipient_id.name" />
+										</td>
+										<td class="input_info">
+											<span t-field="policy.recipient_mobile" />
+										</td>
+										<td class="input_info">
+											<span t-field="policy.freight_count" />
+										</td>
+										<td class="input_info">
+											<div style="display:inline;"
+												t-foreach="policy.content_ids" t-as="content">
+												<span t-esc="content.name" />
+												/
+											</div>
+										</td>
+										<td class="input_info">
+											<span t-field="policy.place_from.name" />
+										</td>
+										<td class="input_info">
+											<span t-field="policy.place_dest.name" />
+										</td>
+										<td class="input_info">
+
+										</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+
+
+</odoo>

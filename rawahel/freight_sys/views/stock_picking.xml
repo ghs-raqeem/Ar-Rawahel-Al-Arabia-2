@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!-- <record id="inherit_stock_picking_type" model="ir.ui.view"> <field 
+			name="name">inherit.stock.picking.type</field> <field name="model">stock.picking.type</field> 
+			<field name="inherit_id" ref="stock.view_picking_type_form" /> <field name="arch" 
+			type="xml"> <data> <field name="code" position="after"> <field name="delivery" 
+			/> </field> </data> </field> </record> -->
+
+		<record id="inherit_stock_picking" model="ir.ui.view">
+			<field name="name">inherit.stock.picking</field>
+			<field name="model">stock.picking</field>
+			<field name="inherit_id" ref="stock.view_picking_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//sheet/group[1]" position="after">
+						<group name="trip_info" string="Trip Info">
+							<field name="trip_id" />
+							<field name="vehicle_id" />
+							<field name="driver_id" />
+						</group>
+					</xpath>
+					<field name="partner_id" position="before">
+						<field name="policy_id" />
+						<field name="location_dest_load" invisible="0" />
+						<field name="location_dest_download" invisible="0" />
+					</field>
+					<field name="scheduled_date" position="replace">
+						<field name="date_validation" readonly="0"/>
+					</field>
+					<field name="origin" position="before">
+						<field name="is__return" />
+					</field>
+					<xpath
+						expr="//field[@name='move_lines']/tree/field[@name='product_id']"
+						position="after">
+						<field name="barcode" />
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+
+		<!-- Batch picking -->
+		<record id="inherit_stock_batch_picking" model="ir.ui.view">
+			<field name="name">inherit.stock.picking.batch</field>
+			<field name="model">stock.picking.batch</field>
+			<field name="inherit_id"
+				ref="stock_picking_batch.stock_picking_batch_form" />
+			<field name="arch" type="xml">
+				<data>
+					<xpath expr="//header" position="replace">
+						<header>
+							<button name="print_picking" string="Print" type="object"
+								class="oe_highlight" />
+							<button name="done" states="draft" string="Done"
+								type="object" class="oe_highlight" />
+							<field name="state" widget="statusbar"
+								statusbar_visible="draft,done" />
+						</header>
+					</xpath>
+					<!-- <xpath expr="//button[@name='confirm_picking']" position="attributes"> 
+						<attribute name="invisible">1</attribute> </xpath> -->
+					<form position="inside">
+						<field name="_barcode_scanned" widget="barcode_handler" />
+					</form>
+					<field name="user_id" position="after">
+						<field name="driver_id" />
+						<field name="trip_id" />
+						<field name="type" widget="radio" readonly="1" />
+						<!-- <field name="scan_float" options="{'barcode_events': True}" widget="field_float_scannable"/> -->
+					</field>
+					<xpath expr="//field[@name='picking_ids']/tree"
+						position="replace">
+						<tree decoration-success="(is__done==True)"
+							decoration-danger="(is__done==False)">
+							<field name="name" />
+							<field name="is__done" invisible="1" />
+							<field name="freights_name" />
+							<field name="qty_freights_done" />
+							<field name="move_lines" />
+							<field name="done_freights"
+								options="{'barcode_events': True}"
+								widget="field_float_scannable" />
+							<field name="backorder_id" />
+							<field name="origin" />
+							<field name="date" />
+							<field name="scheduled_date" />
+							<field name="state" />
+						</tree>
+
+					</xpath>
+				</data>
+			</field>
+		</record>
+
+		<record id="inherit_stock_batch_picking_tree"
+			model="ir.ui.view">
+			<field name="name">inherit.stock.picking.batch</field>
+			<field name="model">stock.picking.batch</field>
+			<field name="inherit_id"
+				ref="stock_picking_batch.stock_picking_batch_tree" />
+			<field name="arch" type="xml">
+				<data>
+					<field name="user_id" position="before">
+						<field name="driver_id" />
+						<field name="trip_id" />
+						<field name="type" widget="radio" />
+					</field>
+				</data>
+			</field>
+		</record>
+		<record id="stock_picking_batch.stock_picking_batch_filter"
+			model="ir.ui.view">
+			<field name="name">stock.picking.batch.filter</field>
+			<field name="model">stock.picking.batch</field>
+			<field name="arch" type="xml">
+				<search string="Search Batch Picking">
+					<field name="name" string="Batch Picking" />
+					<field name="user_id" />
+					<group expand="0" string="Group By">
+						<filter string="User" domain="[]"
+							context="{'group_by':'user_id'}" />
+						<filter string="State" domain="[]"
+							context="{'group_by':'state'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+		<record id="stock_picking_batch.stock_picking_batch_action"
+			model="ir.actions.act_window">
+			<field name="name">Batch Pickings</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">stock.picking.batch</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,kanban,form</field>
+			<field name="search_view_id"
+				ref="stock_picking_batch.stock_picking_batch_filter" />
+			<field name="help" type="html">
+				<p class="oe_view_nocontent_create">
+					Click to create a Batch Picking.
+				</p>
+				<p>
+					The goal of the batch picking is to group operations that may
+					(needs to) be done together in order to increase their efficiency.
+					It may also be useful to assign jobs (one person = one batch) or
+					help the timing management of operations (tasks to be done at 1pm).
+				</p>
+			</field>
+		</record>
+
+		<!-- <record model="ir.actions.act_window" id="reception_action_freight"> -->
+		<!-- <field name="name">Reception</field> -->
+		<!-- <field name="type">ir.actions.act_window</field> -->
+		<!-- <field name="res_model">stock.picking</field> -->
+		<!-- <field name="view_id" ref="stock.vpicktree" /> -->
+		<!-- <field name="view_mode">tree,form</field> -->
+		<!-- <field name="context">{'default_policy_id': active_id}</field> -->
+		<!-- <field name="domain">[('policy_id', '=', active_id)]</field> -->
+		<!-- </record> -->
+
+
+
+	</data>
+</odoo>
+
+

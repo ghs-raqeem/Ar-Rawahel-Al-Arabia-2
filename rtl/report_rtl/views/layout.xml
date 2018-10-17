@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <template id="style">
+            .container{
+                direction: rtl !important;
+                text-align: rtl;
+            }
+            .pull-right{
+                float: left !important;
+            }
+            .header .text-right{
+                float: left !important;
+                text-align: left !important;
+            }
+            .footer .text-right{
+                float: left !important;
+                text-align: left !important;
+            }
+            
+        </template>
+        <template id="external_layout_background" inherit_id="web.external_layout_background">
+            <xpath expr="//div[contains(@class, 'header')]" position="attributes">
+                <attribute name="t-att-class">'header ' + lang_direction</attribute>
+            </xpath>
+            <xpath expr="//div[contains(@class, 'footer')]" position="attributes">
+                <attribute name="t-att-class">'footer ' + lang_direction</attribute>
+            </xpath>
+        </template>
+        <template id="external_layout_boxed" inherit_id="web.external_layout_boxed">
+            <xpath expr="//div[contains(@class, 'header')]" position="attributes">
+                <attribute name="t-att-class">'header ' + lang_direction</attribute>
+            </xpath>
+            <xpath expr="//div[contains(@class, 'footer')]" position="attributes">
+                <attribute name="t-att-class">'footer ' + lang_direction</attribute>
+            </xpath>
+        </template>
+        <template id="external_layout_clean" inherit_id="web.external_layout_clean">
+            <xpath expr="//div[contains(@class, 'header')]" position="attributes">
+                <attribute name="t-att-class">'header ' + lang_direction</attribute>
+            </xpath>
+            <xpath expr="//div[contains(@class, 'footer')]" position="attributes">
+                <attribute name="t-att-class">'footer ' + lang_direction</attribute>
+            </xpath>
+        </template>
+        <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[contains(@class, 'header')]" position="attributes">
+                <attribute name="t-att-class">'header ' + lang_direction</attribute>
+            </xpath>
+            <xpath expr="//div[contains(@class, 'footer')]" position="attributes">
+                <attribute name="t-att-class">'footer ' + lang_direction</attribute>
+            </xpath>
+        </template>
+
+
+        <template id="html_container" inherit_id="web.html_container">
+            
+            <xpath expr="//t[@t-set='body_classname']" position="replace">
+                <t t-set="body_classname" t-value="'container '+lang_direction"/>
+            </xpath>
+        </template>
+        
+        <template id="minimal_layout" inherit_id="web.minimal_layout">
+
+            <xpath expr="//body" position="attributes">
+                <attribute name="class"></attribute>     
+                <attribute name="t-att-class">'container ' + lang_direction</attribute>      
+            </xpath>
+            <xpath expr="//t[@t-call-assets='web.report_assets_common']" position="after">
+                <link t-if="lang_direction == 'rtl'" rel="stylesheet" href="/report_rtl/static/src/css/bootstrap-rtl.min.css"/>
+                <link t-if="lang_direction == 'rtl'" rel="stylesheet" href="/report_rtl/static/src/css/rtl.css"/>
+                <link t-if="lang_direction == 'rtl'" rel="stylesheet" href="/report_rtl/static/src/css/report.css"/>
+                <style t-if="lang_font == 'font1'">
+                    *:not(.fa){font-family: 'Stc', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font2'">
+                    *:not(.fa){font-family: 'GE SS', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font3'">
+                    *:not(.fa){font-family: 'GE SS Two', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font4'">
+                    *:not(.fa){font-family: 'Droid Arabic Kufi', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font5'">
+                    *:not(.fa){font-family: 'Jazeera', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font6'">
+                    *:not(.fa){font-family: 'GE SS Unique', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font7'">
+                    *:not(.fa){font-family: 'JF Flat', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font8'">
+                    *:not(.fa){font-family: 'Frutiger LT Arabic', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font9'">
+                    *:not(.fa){font-family: 'DIN Next LT W23', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font10'">
+                    *:not(.fa){font-family: 'Boutros Asma', serif !important;}
+                </style>
+                <style t-if="lang_font == 'font11'">
+                    *:not(.fa){font-family: 'Ara ES Nawar', serif !important;}
+                </style>
+                <style t-if="lang_direction == 'rtl'">
+                    <t t-call="report_rtl.style"/>
+                </style>
+            </xpath>
+            
+            
+        </template>
+         <template id="assets_backend" name="report assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" type="text/css" href="/report_rtl/static/src/css/report_iframe.css"/>
+            </xpath>
+        </template>
+    </data>
+</openerp>

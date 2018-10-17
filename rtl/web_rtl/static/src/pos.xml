@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-extend="ActionpadWidget">
+        <t t-jquery="div.pay-circle" t-operation="replace">
+            <div class='pay-circle'>
+                <i class='fa fa-thumbs-up' aria-hidden="True"/>
+            </div>
+        </t>
+    </t>
+</templates>

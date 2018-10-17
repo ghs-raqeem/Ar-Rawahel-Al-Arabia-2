@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+	<!-- wizard validate policy -->
+
+	<record model="ir.ui.view" id="confirm_return_wizard_form">
+		<field name="name">Confirm return</field>
+		<field name="model">freight_sys.confirm_return</field>
+		<field name="arch" type="xml">
+			<form string="Return confirmation">
+				<div class="oe_title">
+					<h2>
+						What is the reason of return ?
+					</h2>
+					<br></br>
+				</div>
+				
+				<div class="row">
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-8">
+						<field name="reason" nolabel="1"/>
+					</div>
+				</div>
+				<footer>
+					<button name="confirm_return" string="Confirm return"
+						type="object" class="oe_highlight" icon="fa-check-circle" > 
+					</button>
+					<button string="Cancel" class="btn-default" special="cancel" />
+				</footer>
+			</form>
+		</field>
+	</record>
+
+
+	<record id="action_confirm_return_wizard" model="ir.actions.act_window">
+		<field name="name">Confirm Return Wizard</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.confirm_return</field>
+		<field name="src_model">freight_sys.policy</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="confirm_return_wizard_form" />
+		<field name="target">new</field>
+	</record>
+
+</odoo>

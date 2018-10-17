@@ -1,0 +1,16 @@
+.bg { 
+    /* The image used */
+    background-image: url("raqeem_custom_report/static/src/img/raqeem_back.jpg");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg111 {
+	background-color: #3465a4;
+}

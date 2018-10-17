@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- Top menu item -->
+
+	<menuitem id="primary_menu_system" name="Rawahel System"
+		web_icon="freight_sys,static/description/icon.png" sequence="1" />
+
+	<menuitem id="menu_policy" action="policy_action" parent="primary_menu_system"
+		sequence="1" />
+
+	<menuitem id="menu_trips" parent="primary_menu_system" name="Trips"
+		sequence="2" />
+
+	<menuitem id="menu_trips_transfert" action="trips_action_transfert" parent="menu_trips" name="Transfert Trips"
+		sequence="1" />
+	<menuitem id="menu_trips_delivery" action="trips_action_delivery" parent="menu_trips" name="Delivery Trips"
+		sequence="2" />
+
+	<menuitem id="menu_configuration" name="Configurations"
+		parent="primary_menu_system" sequence="3" />
+
+</odoo>

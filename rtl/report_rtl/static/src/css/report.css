@@ -1,0 +1,159 @@
+@font-face {
+  font-family: 'Stc';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/STC-Bold.eot);
+  src: url(/report_rtl/static/src/fonts/STC-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Stc Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/STC-Regular.eot);
+  src: url(/report_rtl/static/src/fonts/STC-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'DIN Next LT W23';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/report_rtl/static/src/fonts/DIN_Next_LT_W23_Regular.otf);
+  src: url(/report_rtl/static/src/fonts/DIN_Next_LT_W23_Regular.otf) format('truetype');
+}
+@font-face {
+  font-family: 'DIN Next LT W23';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/DIN_Next_LT_W23_Bold.otf);
+  src: url(/report_rtl/static/src/fonts/DIN_Next_LT_W23_Bold.otf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Stc';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/STC-Bold.eot);
+  src: url(/report_rtl/static/src/fonts/STC-Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'JF Flat';
+  font-style: bold;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/JF-Flat-Regular.otf);
+  src: url(/report_rtl/static/src/fonts/JF-Flat-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'JF Flat';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/JF-Flat-Regular.otf);
+  src: url(/report_rtl/static/src/fonts/JF-Flat-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Jazeera';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/Al-Jazeera-Arabic-Regular.ttf);
+  src: url(/report_rtl/static/src/fonts/Al-Jazeera-Arabic-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Boutros Asma';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/boutrosAsma.ttf);
+  src: url(/report_rtl/static/src/fonts/boutrosAsma.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Ara ES Nawar';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/AraESNawar-Regular.otf);
+  src: url(/report_rtl/static/src/fonts/AraESNawar-Regular.otf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Frutiger LT Arabic';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/FrutigerLTArabic-65Bold.ttf);
+  src: url(/report_rtl/static/src/fonts/FrutigerLTArabic-65Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Droid Arabic Kufi';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/report_rtl/static/src/fonts/DroidKufi-Regular.eot);
+  src: url(/report_rtl/static/src/fonts/DroidKufi-Regular.woff2) format('woff2'),
+       url(/report_rtl/static/src/fonts/DroidKufi-Regular.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/DroidKufi-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'GE SS Unique';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/GE_SS_Unique_Bold.eot);
+  src: url(/report_rtl/static/src/fonts/GE_SS_Unique_Bold.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/GE_SS_Unique_Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'GE SS Unique';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/report_rtl/static/src/fonts/GE_SS_Unique_Light.eot);
+  src: url(/report_rtl/static/src/fonts/GE_SS_Unique_Light.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/GE_SS_Unique_Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'GE SS Two';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/GE_SS_Two_Bold.eot);
+  src: url(/report_rtl/static/src/fonts/GE_SS_Two_Bold.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/GE_SS_Two_Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'GE SS Two';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/report_rtl/static/src/fonts/GE_SS_Text_Light.eot);
+  src: url(/report_rtl/static/src/fonts/GE_SS_Text_Light.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/GE_SS_Text_Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'GE SS';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/GE_SS_Text_Bold.eot);
+  src: url(/report_rtl/static/src/fonts/GE_SS_Text_Bold.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/GE_SS_Text_Bold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'GE SS';
+  font-style: normal;
+  font-weight: 400;
+  src: url(/report_rtl/static/src/fonts/GE_SS_Two_Light.eot);
+  src: url(/report_rtl/static/src/fonts/GE_SS_Two_Light.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/GE_SS_Two_Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Droid Arabic Naskh';
+  font-style: normal;
+  font-weight: 700;
+  src: url(/report_rtl/static/src/fonts/DroidNaskh-Bold.eot);
+  src: url(/report_rtl/static/src/fonts/DroidNaskh-Bold.woff2) format('woff2'),
+       url(/report_rtl/static/src/fonts/DroidNaskh-Bold.woff) format('woff'),
+       url(/report_rtl/static/src/fonts/DroidNaskh-Bold.ttf) format('truetype');
+}
+
+.rtl{direction:rtl}

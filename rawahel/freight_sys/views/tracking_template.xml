@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+	<!-- <template id="header_footer_custom" inherit_id="website.footer_default" 
+		name="Footer tracking Link"> <xpath expr="//ul[@id='products']" position="inside"> 
+		<li> <a href="/tracking">Tracking</a> </li> </xpath> </template> -->
+
+	<template id="freight_sys.tracking" name="Tracking">
+		<t t-call="website.layout">
+			<div id="wrap">
+				<div class="oe_structure" />
+				<div id="track-box" class="container">
+					<div class="row mt8">
+						<h1 class="text-center">
+							Enter policy tracking number
+						</h1>
+
+						<div class="row">
+							<section id="forms">
+								<form action="/result/" method="post"
+									class="s_website_form form-horizontal container-fluid mt32"
+									enctype="multipart/form-data">
+									<input type="hidden" name="csrf_token"
+										t-att-value="request.csrf_token()"></input>
+
+									<div class="col-md-6">
+
+										<div
+											class="form-group form-field o_website_form_required_custom">
+											<div class="col-md-4 col-sm-4 text-right">
+												<label class="control-label" for="code">Tracking Number
+												</label>
+											</div>
+											<div class="col-md-6 col-sm-8">
+												<input type="text"
+													class="form-control o_website_form_input" name="code"
+													required="" />
+											</div>
+										</div>
+
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<div
+												class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+												<button type="submit" class="btn">Submit</button>
+											</div>
+										</div>
+									</div>
+
+
+								</form>
+							</section>
+						</div>
+					</div>
+				</div>
+			</div>
+		</t>
+	</template>
+
+
+	<template id="freight_sys.result" name="Result">
+		<t t-call="website.layout">
+			<div class="oe_structure">
+				<div class="container">
+
+					<t t-if="not policies">
+						<div id="incorrect-code">
+							<p class="alert alert-danger text-center">Incorrect Tracking Number</p>
+							<div class="col-md-12 text-center mt16 mb16">
+								<a href="/tracking" class="btn btn-primary btn-lg">Re-Enter The Tracking Number</a>
+							</div>
+						</div>
+					</t>
+
+					<tr t-foreach="policies" t-as="policy">
+
+						<center>
+							<h3 class="title-result">
+								POLICY TRACKING INFORMATIONS
+							</h3>
+						</center>
+						<div id="result-box" class="center-block">
+							<section class="row">
+								<div class="col-xs-1"></div>
+								<div class="col-xs-5" style="text-align: justify;">
+									<p>
+										Tracking code:
+										<span t-field="policy.code_track" />
+									</p>
+									<p>
+										From:
+										<span t-field="policy.place_from.name" />
+
+									</p>
+									<p>
+										To:
+										<span t-field="policy.place_dest.name" />
+									</p>
+								</div>
+								<div class="col-xs-5" style="align-items: center;">
+									<p>
+										Freight number:
+										<span t-field="policy.nbr_freights" />
+									</p>
+									<p>
+										Sender:
+										<span t-field="policy.sender_id.name" />
+									</p>
+									<p>
+										Receipient:
+										<span t-field="policy.recipient_id.name" />
+									</p>
+
+								</div>
+								<div class="col-xs-1"></div>
+							</section>
+
+							<table class="table table-bordered">
+								<thead>
+									<tr>
+										<th bgcolor="#999999">Place</th>
+										<th bgcolor="#999999">Date</th>
+									</tr>
+								</thead>
+								<tbody>
+
+									<tr t-foreach="policy.picking_ids" t-as="picking">
+										<t t-if="picking.state == 'done'">
+											<t t-if="picking.picking_type_id.code == 'incoming'">
+												<td class="input_info">
+													Incoming to
+													<span
+														t-field="picking.picking_type_id.warehouse_id.name" />
+												</td>
+												<td class="input_info">
+													<span t-field="picking.date_validation" />
+												</td>
+											</t>
+											<t t-if="picking.picking_type_id.code == 'internal'">
+												<td class="input_info">
+													Outgoing from
+													<span
+														t-field="picking.picking_type_id.warehouse_id.name" />
+												</td>
+												<td class="input_info">
+													<span t-field="picking.date_validation" />
+												</td>
+											</t>
+											<t t-if="picking.picking_type_id.code == 'to_delivery'">
+												<td class="input_info">
+													Outgoing from
+													<span
+														t-field="picking.picking_type_id.warehouse_id.name" />
+													و في طريقها إلى المستلم
+													"
+													<span t-field="policy.recipient_id.name" />
+													"
+												</td>
+
+												<td class="input_info">
+													<span t-field="picking.date_validation" />
+												</td>
+											</t>
+											<t t-if="picking.picking_type_id.code == 'outgoing'">
+												<td class="input_info">
+													وصلت إلى المستلم
+													"
+													<span t-field="policy.recipient_id.name" />
+													"
+												</td>
+
+												<td class="input_info">
+													<span t-field="picking.date_validation" />
+												</td>
+											</t>
+										</t>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</tr>
+				</div>
+			</div>
+		</t>
+	</template>
+
+
+
+</odoo>

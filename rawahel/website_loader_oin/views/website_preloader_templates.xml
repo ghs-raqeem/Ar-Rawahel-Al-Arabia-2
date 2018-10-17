@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Odoo IT now: Pre Loader in website -->
+    <template id="user_navbar_odooitnow" inherit_id="web.layout">
+        <xpath expr="//body" position="inside">
+            <div id="preloader">
+                <div id="status">&amp;nbsp;</div>
+            </div>
+            <script language="javascript" type="text/javascript">
+$(window).on('load', function() { 
+  $('#status').fadeOut();
+  $('#preloader').delay(350).fadeOut('slow');
+  $('body').delay(350).css({'overflow':'visible'});
+})
+            </script>
+        </xpath>
+    </template>
+ 
+ </odoo>

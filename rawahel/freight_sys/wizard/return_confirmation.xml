@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record model="ir.ui.view" id="confirm_return_form">
+			<field name="name">wizard.form</field>
+			<field name="model">freight_sys.confirm_return_policy</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Confirm dialog">
+					<field name="yes_no" readonly="1" />
+					<footer>
+						<button class="oe_highlight" name="yes" string="Yes" />
+						<button class="oe_highlight" name="no" string="No" />
+					</footer>
+				</form>
+			</field>
+		</record>
+		<record id="action_confirm_return" model="ir.actions.act_window">
+			<field name="name">confirm return policy</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">freight_sys.confirm_return_policy</field>
+			<field name="src_model">freight_sys.policy</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="confirm_return_form" />
+			<field name="target">new</field>
+		</record>
+	</data>
+</odoo>

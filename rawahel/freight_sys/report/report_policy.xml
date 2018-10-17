@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<odoo>
+
+	<record id="paperformat_policy_report" model="report.paperformat">
+		<field name="name">European A4 Landscape</field>
+		<field name="default" eval="True" />
+		<field name="format">A4</field>
+		<field name="page_height">0</field>
+		<field name="page_width">0</field>
+		<field name="orientation">Portrait</field>
+		<field name="margin_top">10</field>
+		<field name="margin_bottom">10</field>
+		<field name="margin_left">0</field>
+		<field name="margin_right">0</field>
+		<field name="header_line" eval="False" />
+		<field name="header_spacing">50</field>
+		<field name="dpi">90</field>
+	</record>
+
+	<report id="action_todo_policy_report" string="print policy"
+		model="freight_sys.policy" report_type="qweb-pdf"
+		name="freight_sys.report_policy_template" paperformat="paperformat_policy_report"
+		print_report_name="'%s - البوليصة' % (object.name)" />
+
+	<template id="basic_layout">
+		<t t-call="web.html_container">
+			<div class="article">
+				<t t-raw="0" />
+			</div>
+		</t>
+	</template>
+
+
+	<template id="report_policy_template">
+		<t t-call="web.html_container">
+			<t t-foreach="docs" t-as="policy">
+				<t t-call="freight_sys.basic_layout">
+					<div class="page">
+						<link href="/freight_sys/static/src/css/report_policy_style.css"
+							rel="stylesheet" type="text/css" />
+						<div class="container-fluid" dir="rtl">
+							<section id="my-row" class="row">
+								<div class="col-xs-4 panel box">
+									<section class="row" style="padding:20 5;">
+										<div class="col-xs-5">
+											رقم البوليصة:
+											<br />
+											BILL NO
+
+										</div>
+										<div class="col-xs-7 input_info1">
+											<span t-field="policy.name"></span>
+										</div>
+
+									</section>
+
+								</div>
+								<div class="col-xs-5 panel box">
+									<section class="row" style="padding:20 5;">
+										<div class="col-xs-5">
+											من
+											<br />
+											<span class="input_info" t-field="policy.place_from"></span>
+										</div>
+										<div class="col-xs-2 input_info">
+											<i class="fa fa-chevron-left" style="font-size:15px;color:red"></i>
+											<i class="fa fa-chevron-left" style="font-size:15px;color:red"></i>
+										</div>
+										<div class="col-xs-5" style="text-align:left;">
+											إلى
+											<br />
+											<span class="input_info" t-field="policy.place_dest"></span>
+										</div>
+									</section>
+
+								</div>
+								<div class="col-xs-3 panel box">
+									<section class="row" style="padding:20 5;">
+										<div>
+											طريقة الدفع:
+											<![CDATA[&nbsp;]]>
+											<![CDATA[&nbsp;]]>
+											Term of payment
+										</div>
+										<br />
+										<div class="row">
+											<div class="col-xs-6">
+												على المستلم
+											</div>
+											<div class="col-xs-6">
+												<span class="check" style="height:10px ;max-width: 50px !important;">
+													<i class="fa fa-check" style="font-size:24px;color:#4CAF50;"
+														t-if="policy.by_recipient"></i>
+													<i class="fa fa-close" style="font-size:24px;color:red"
+														t-if="not policy.by_recipient"></i>
+												</span>
+											</div>
+										</div>
+										<br />
+										<div class="row">
+											<div class="col-xs-6">
+												على المرسل
+											</div>
+											<div class="col-xs-6">
+												<span class="check">
+													<i class="fa fa-check" style="font-size:24px;color:#4CAF50;"
+														t-if="policy.by_sender"></i>
+													<i class="fa fa-close" style="font-size:24px;color:red"
+														t-if="not policy.by_sender"></i>
+												</span>
+											</div>
+										</div>
+									</section>
+
+								</div>
+							</section>
+
+							<section id="my-row" class="row">
+								<div class="col-xs-6 panel box">
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-user" style="font-size:15px;color:red"></i>
+											المرسل:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.sender_id.name"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Sender
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-location-arrow" style="font-size:15px;color:red"></i>
+											العنوان:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.sender_id"
+												t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Adress
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-phone" style="font-size:15px;color:red;width:5px;"></i>
+											<![CDATA[
+												&nbsp;
+													]]>
+											الهاتف:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.sender_id.phone"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Phone
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-mobile" style="font-size:15px;color:red;width:5px" />
+											<![CDATA[
+												&nbsp;
+													]]>
+											الجوال:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.sender_id.mobile"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Mobile
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											رقم الهوية:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.sender_id.identification_nbr"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:I.D.NO
+										</div>
+									</section>
+								</div>
+								<div class="col-xs-6 panel box">
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-user" style="font-size:15px;color:red"></i>
+											المستلم:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.recipient_id.name"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Recipient
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-location-arrow" style="font-size:15px;color:red"></i>
+											العنوان:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.recipient_id"
+												t-options='{"widget": "contact", "fields": ["address"], "no_marker": True}' />
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Adress
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-phone" style="font-size:15px;color:red;width:5px;"></i>
+											<![CDATA[
+												&nbsp;
+													]]>
+											الهاتف:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.recipient_id.phone"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Phone
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											<i class="fa fa-mobile" style="font-size:15px;color:red;width:5px" />
+											<![CDATA[
+												&nbsp;
+													]]>
+											الجوال:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.recipient_id.mobile"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:Mobile
+										</div>
+									</section>
+									<section class="row">
+										<div class="col-xs-3">
+											رقم الهوية:
+										</div>
+										<div class="col-xs-6 input_info">
+											<span t-field="policy.recipient_id.identification_nbr"></span>
+										</div>
+										<div class="col-xs-3" style="text-align:left;">
+											:I.D.NO
+										</div>
+									</section>
+								</div>
+
+
+							</section>
+							<section id="my-row" class="row">
+								<div class="col-xs-6 panel box">
+									<div class="container">
+										<section class="row titl">
+											<div class="col-xs-5">
+												الشحنات
+											</div>
+											<div class="col-xs-2" style="text-align:center;">
+												<i class="fa fa-cubes" style="font-size:20px;color:red"></i>
+											</div>
+											<div class="col-xs-5" style="text-align:left;">
+												Freights
+											</div>
+										</section>
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>عدد الشحنات</th>
+													<th>القيمة</th>
+													<th>المحتويات</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="input_info">
+														<span t-field="policy.nbr_freights" />
+													</td>
+													<td class="input_info">
+														<span t-field="policy.goods_value" />
+													</td>
+													<td class="input_info">
+														<div id="example1" style="display:inline;" t-foreach="policy.content_ids"
+															t-as="content">
+															<span t-esc="content.name" />
+														</div>
+													</td>
+												</tr>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-xs-6 panel box">
+									<div class="container">
+										<section class="row titl">
+											<div class="col-xs-5">
+												أجور الشحن و التوصيل
+											</div>
+											<div class="col-xs-2" style="text-align:center;">
+												<i class="fa fa-truck" style="font-size:20px;color:red"></i>
+											</div>
+											<div class="col-xs-5" style="text-align:left;">
+												Charges
+											</div>
+										</section>
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>الإسم</th>
+													<th>الدفع على</th>
+													<th>السعر قبل الضريبة</th>
+													<th>الضريبة</th>
+													<th>الإجمالي</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr t-foreach="policy.charge_line_ids" t-as="charge">
+													<td class="input_info">
+														<span t-field="charge.charge_id.name" />
+													</td>
+													<td class="input_info">
+														<span t-field="charge.payee" />
+													</td>
+													<td class="input_info">
+														<span t-esc="charge.charge_price/1.05" />
+													</td>
+													<td class="input_info">
+														<div id="example1" style="display:inline;" t-foreach="charge.charge_id.taxes_id"
+															t-as="tax">
+															<span t-esc="tax.name" />
+														</div>
+													</td>
+													<td class="input_info">
+														<span t-field="charge.charge_price" />
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+
+							</section>
+							<section id="my-row" class="row">
+								<div class="col-xs-6 panel box">
+									<p class="p_center">
+										1- إستلام المرسل نسخة البوليصة بمثابة قبول كل ما جاء بها من
+										شروط.
+										<br />
+										2- الشركة غير مسؤولة عن أي أضرار أو تلف لأي بضاعة قابلة للكسر
+										أو ناتجة عن سوء تغليف أو حادث مرور أو حريق أو كوارث طبيعية.
+										<br />
+										3- أقصى تعويض عن فقدان أي إرسالية لا يتجاوز (100 ريال) مائة
+										ريال ما لم يتم الإتفاق على غير ذلك.
+										<br />
+										4- الشركة غير مسؤولة عن محتويات أي بوليصة لم يتسلمها صاحبها
+										بعد مرور (15) خمسة عشر يوم.
+										<br />
+										5- للشركة الحق في إيقاف أي إرسالية يتضح للشركة أنها مخالفة
+										لشروط النقل.
+									</p>
+								</div>
+								<div class="col-xs-6 panel box">
+									<div class="container">
+										<table class="table table-bordered" style="margin-top:5;">
+											<tr>
+												<th style="width:20%;">المستلم من رواحل</th>
+												<td style="width:30%;" class="input_info">
+													<span t-field="user.name" />
+													<span t-field="user.digital_signature"
+														t-field-options='{"widget": "image"}' />
+												</td>
+												<td style="width:20%;">
+													التاريخ:
+												</td>
+											</tr>
+											<tr>
+												<th style="width:20%;">إسم و توقيع المرسل</th>
+												<td style="width:30%;" class="input_info">
+													<span t-field="policy.sender_id.name" />
+													<span t-field="policy.sender_signature"
+														t-field-options='{"widget": "image"}' />
+												</td>
+												<td style="width:20%;">
+													التاريخ:
+												</td>
+											</tr>
+											<tr>
+												<th style="width:20%;">إسم و توقيع المستلم</th>
+												<td class="input_info" style="width:30%;">
+													<span t-field="policy.recipient_id.name" />
+													<span t-field="policy.recipient_signature"
+														t-field-options='{"widget": "image"}' />
+												</td>
+												<td style="width:20%;">
+													التاريخ:
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</section>
+							<section class="row">
+								<div class="col-xs-12 box1">
+									<div class="url">
+										<i class="fa fa-external-link" style="font-size:20px;color:red"></i>
+										رابط التتبع:
+										<span class="input_url">
+											http://rawahelarabiya.com
+										</span>
+									</div>
+								</div>
+							</section>
+						</div>
+					</div>
+					<div class="row_footer">
+						<div class="col-xs-3">
+							الرياض:
+							<span t-field="res_company.riadh_tel" />
+							<br />
+							عنيزة:
+							<span t-field="res_company.aniza_tel" />
+						</div>
+
+						<div class="col-xs-3">
+							جدة:
+							<span t-field="res_company.jeddah_tel" />
+							<br />
+							بريدة:
+							<span t-field="res_company.brida_tel" />
+						</div>
+						<div class="col-xs-3">
+							الدمام:
+							<span t-field="res_company.dammam_tel" />
+							<br />
+							حائل:
+							<span t-field="res_company.hail_tel" />
+						</div>
+						<div class="col-xs-3">
+							حفر الباطن:
+							<span t-field="res_company.hfr_baten_tel" />
+							<br />
+							المدينة المنورة:
+							<span t-field="res_company.Medina_tel" />
+						</div>
+					</div>
+				</t>
+			</t>
+		</t>
+	</template>
+
+
+</odoo>

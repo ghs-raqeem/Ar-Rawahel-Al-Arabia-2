@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<!-- policy form views -->
+
+	<record id="policy_form_view" model="ir.ui.view">
+		<field name="name">policy.form</field>
+		<field name="model">freight_sys.policy</field>
+		<field name="arch" type="xml">
+			<form string="Policy">
+				<header>
+					<!-- <button name="create_invoices" string="Create invoice" type="object" -->
+					<!-- class="oe_highlight" /> -->
+					<button name="button_confirm" states='new' string="Validate"
+						type="object" class="oe_highlight" />
+<!-- 					<button name="button_reception" string="Receipt policy"
+						type="object" class="oe_highlight"
+						attrs="{'invisible': ['|',('delivery','=', True),('state','!=','destination')]}" /> -->
+<!-- 					<button name="button_delivery" string="Delivery policy"
+						type="object" class="btn-info" icon="fa-truck"
+						attrs="{'invisible': ['|',('delivery','=', True ),('state','!=','destination')]}" /> -->
+<!-- 					<button name="final_reception" states='to_delivery' string="Final Reception"
+						type="object" class="oe_highlight" /> -->
+					<button name="return_policy" string="Return policy" type="object"
+						icon="fa-reply" class="btn-warning"
+						attrs="{'invisible': [('state','!=','destination')]}" />
+					<button name="return_reception" string="Return Reception"
+						type="object" class="oe_highlight" states='return'
+						confirm="Confirm if you are sure that the sender is coming to take this returned policy" />
+					<button name="cancel_return" string="Cancel return" type="object"
+						icon="fa-reply" class="oe_highlight" attrs="{'invisible': [('is_returned','=',False)]}" />
+					<field name="state" widget="statusbar" clickable="0"
+						statusbar_visible="new,source,destination,received" />
+
+				</header>
+				<sheet>
+					<div class="oe_button_box" name="button_box">
+						<button class="oe_stat_button" name="%(product_action_from_policy)d"
+							type="action" icon="fa-envelope">
+							<field string="الشحنات" name="freight_count" widget="statinfo" />
+						</button>
+						<button type="object" name="action_view_invoice" class="oe_stat_button"
+							icon="fa-pencil-square-o" attrs="{'invisible': [('state','=','new')]}">
+							<field name="count_invoices" widget="statinfo" string="Invoices" />
+						</button>
+<!-- 						<button class="oe_stat_button" name="action_view_picking"
+							attrs="{'invisible': [('state','=','new')]}" type="object" icon="fa-university"
+							background-color="red">
+							<field name="picking_reception_count" widget="statinfo"
+								string="Reception" />
+						</button> -->
+						<button class="oe_stat_button" name="action_view_track_picking"
+							attrs="{'invisible': [('state','=','new')]}" type="object" icon="fa-arrows-h"
+							background-color="red">
+							<field name="picking_track_count" widget="statinfo" string="Tracking way" />
+						</button>
+						<button class="oe_stat_button" name="action_view_return_picking"
+							attrs="{'invisible': [('is_returned','=',False)]}" type="object"
+							icon="fa-history" background-color="red">
+							<field name="picking_return_count" widget="statinfo"
+								string="Tracking Return" />
+						</button>
+					</div>
+					<div class="oe_title row">
+						<div class="col-xs-7">
+							<h1>
+								<field name="name" readonly="1" />
+							</h1>
+						</div>
+						<div class="col-xs-5">
+							<h2 class="pull-right">
+								<field name="progress" widget="progressbar"
+									states='new,validated,source,in_way,destination,received' />
+							</h2>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-xs-10">
+							<group col="4" colspan="4">
+								<field name="place_from" placeholder="From" />
+								<field name="place_dest" placeholder="Destination" />
+								<field name="code_track" />
+								<field name="date_order" />
+								<field name="date_expected" />
+								<field name="current_location" readonly="1" />
+								<field name="trip_id" readonly="1" />
+								<field name="delivery" />
+								<field name="batch_load" invisible="1" />
+								<field name="batch_download" invisible="1" />
+								<field name="is_routed" invisible="1" />
+								<field name="route_id" invisible="1" />
+								<field name="partner_id" invisible="1" />
+								<field name="picking_type_id" invisible="1" />
+							</group>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-8">
+							<group>
+								<field name="is_returned" readonly="1" />
+								<field name="reason" attrs="{'invisible': [('is_returned','=',False)]}" />
+							</group>
+						</div>
+						<!-- <div class="col-xs-4"> <button name="reserve_return" string="Reserve 
+							return" type="object" icon="fa-reply" attrs="{'invisible': ['|',('is_returned','=',False),('state','=','to_return')]}" 
+							/> </div> -->
+					</div>
+					<separator class="btn-primary text-center" string="Contact informations" />
+					<div class="row">
+						<div class="col-xs-2"></div>
+						<div class="col-xs-8">
+							<group name="sender" string="Sender informations">
+								<field name="sender_id" options="{'no_create_edit':True}" />
+								<label for="street" string="Address" />
+								<div class="o_address_format">
+									<field name="sender_street" placeholder="Street..."
+										class="o_address_street" readonly="0" />
+									<field name="sender_street2" placeholder="Street 2..."
+										class="o_address_street" readonly="0" />
+									<field name="sender_city" placeholder="City" class="o_address_city"
+										readonly="0" />
+									<field name="sender_state_id" class="o_address_state"
+										placeholder="State" options="{&quot;no_open&quot;: True}"
+										readonly="0" />
+									<field name="sender_zip" placeholder="ZIP" class="o_address_zip"
+										readonly="0" />
+									<field name="sender_country_id" placeholder="Country"
+										class="o_address_country"
+										options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+										readonly="0" />
+								</div>
+								<field name="sender_phone" readonly="0" />
+								<field name="sender_mobile" readonly="0" />
+								<field name="sender_identif" readonly="0" />
+								<field name="sender_signature" widget="signature"
+									readonly="0" />
+
+
+
+							</group>
+						</div>
+						<div class="col-xs-2"></div>
+					</div>
+					<div class="row">
+						<div class="col-xs-2"></div>
+						<div class="col-xs-8 ">
+							<group name="recipient" string="Recipient informations">
+								<field name="recipient_id" options="{'no_create_edit':True}" />
+								<label for="street" string="Address" />
+								<div class="o_address_format">
+									<field name="recipient_street" placeholder="Street..."
+										class="o_address_street" readonly="0" />
+									<field name="recipient_street2" placeholder="Street 2..."
+										class="o_address_street" readonly="0" />
+									<field name="recipient_city" placeholder="City" class="o_address_city"
+										readonly="0" />
+									<field name="recipient_state_id" class="o_address_state"
+										placeholder="State" options="{&quot;no_open&quot;: True}"
+										readonly="0" />
+									<field name="recipient_zip" placeholder="ZIP" class="o_address_zip"
+										readonly="0" />
+									<field name="recipient_country_id" placeholder="Country"
+										class="o_address_country"
+										options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+										readonly="0" />
+								</div>
+								<field name="recipient_phone" readonly="0" />
+								<field name="recipient_mobile" readonly="0" />
+								<field name="recipient_identif" readonly="0" />
+								<field name="recipient_signature" widget="signature"
+									readonly="0" />
+							</group>
+						</div>
+						<div class="col-xs-2"></div>
+					</div>
+
+					<separator class="btn-primary text-center" string="Freights informations" />
+					<group col="4" colspan="4">
+						<field name="nbr_freights" />
+						<field name="note" />
+					</group>
+					<group col="4" colspan="4" string="Content Value">
+						<field name="goods_value" widget='monetary'
+							options="{'currency_field': 'company_currency'}" />
+						<field name="content_ids" widget="many2many_tags"
+							options="{'color_field': 'color', 'no_create_edit': True}" />
+					</group>
+					<separator class="btn-primary text-center" string="Charges informations" />
+					<div class="row">
+						<div class="col-xs-12">
+							<group col="4" colspan="4">
+								<field name="payment_type" />
+								<field name="by_sender" invisible="1" />
+								<field name="by_recipient" invisible="1" />
+
+							</group>
+							<field name="charge_line_ids" mode="tree,kanban" widget="one2many_list">
+								<tree editable="bottom">
+									<field name="sequence" widget="handle" />
+									<field name="charge_id" />
+									<field name="payee" />
+									<field name="company_id" invisible="1" />
+									<field name="company_currency" invisible="1" />
+									<field name="charge_price" widget='monetary' sum="Total charges"
+										options="{'currency_field': 'company_currency'}" />
+									<field name="state" />
+								</tree>
+							</field>
+						</div>
+					</div>
+					<!-- <notebook> <page string="Contact informations"> <div class="row"> 
+						<div class="col-xs-6"> <group name="sender" string="Sender informations"> 
+						<field name="sender_id" /> <label for="street" string="Address" /> <div class="o_address_format"> 
+						<field name="sender_street" placeholder="Street..." class="o_address_street" 
+						readonly="1" /> <field name="sender_street2" placeholder="Street 2..." class="o_address_street" 
+						readonly="1" /> <field name="sender_city" placeholder="City" class="o_address_city" 
+						readonly="1" /> <field name="sender_state_id" class="o_address_state" placeholder="State" 
+						options="{&quot;no_open&quot;: True}" readonly="1" /> <field name="sender_zip" 
+						placeholder="ZIP" class="o_address_zip" readonly="1" /> <field name="sender_country_id" 
+						placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: 
+						True, &quot;no_create&quot;: True}" readonly="1" /> </div> <field name="sender_phone" 
+						readonly="1" /> <field name="sender_mobile" readonly="1" /> <field name="sender_identif" 
+						readonly="1" /> <field name="sender_signature" widget="signature" readonly="1" 
+						/> </group> </div> <div class=" col-xs-6 "> <group name="recipient" string="Recipient 
+						informations"> <field name="recipient_id" /> <label for="street" string="Address" 
+						/> <div class="o_address_format"> <field name="recipient_street" placeholder="Street..." 
+						class="o_address_street" readonly="1" /> <field name="recipient_street2" 
+						placeholder="Street 2..." class="o_address_street" readonly="1" /> <field 
+						name="recipient_city" placeholder="City" class="o_address_city" readonly="1" 
+						/> <field name="recipient_state_id" class="o_address_state" placeholder="State" 
+						options="{&quot;no_open&quot;: True}" readonly="1" /> <field name="recipient_zip" 
+						placeholder="ZIP" class="o_address_zip" readonly="1" /> <field name="recipient_country_id" 
+						placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: 
+						True, &quot;no_create&quot;: True}" readonly="1" /> </div> <field name="recipient_phone" 
+						readonly="1" /> <field name="recipient_mobile" readonly="1" /> <field name="sender_identif" 
+						readonly="1" /> <field name="recipient_signature" widget="signature" readonly="1" 
+						/> </group> </div> </div> </page> <page string="General informations"> <group 
+						col="4" colspan="4" string="Payment method"> <field name="payment_type" /> 
+						<field name="by_sender" invisible="1" /> <field name="by_recipient" invisible="1" 
+						/> </group> <group col="4" colspan="4" string="Content Value"> <field name="goods_value" 
+						widget='monetary' options="{'currency_field': 'company_currency'}" /> <field 
+						name="content_ids" widget="many2many_tags" options="{'color_field': 'color', 
+						'no_create_edit': True}" /> </group> </page> <page string="Charges"> <field 
+						name="charge_line_ids" mode="tree,kanban" widget="one2many_list"> <tree editable="bottom"> 
+						<field name="sequence" widget="handle" /> <field name="charge_id" /> <field 
+						name="payee" /> <field name="company_id" invisible="1" /> <field name="company_currency" 
+						invisible="1" /> <field name="charge_price" widget='monetary' sum="Total 
+						charges" options="{'currency_field': 'company_currency'}" /> <field name="state" 
+						/> </tree> </field> </page> <page string="Delivery order lines"> <field name="order_line" 
+						mode="tree,kanban" widget="one2many_list"> <tree editable="bottom"> <field 
+						name="product_id" /> <field name="policy_id" /> <field name="product_qty" 
+						/> <field name="date_order" /> <field name="date_planned" /> </tree> </field> 
+						</page> </notebook> -->
+
+				</sheet>
+			</form>
+		</field>
+	</record>
+
+	<record id="policy_tree_view" model="ir.ui.view">
+		<field name="name">policy.tree</field>
+		<field name="model">freight_sys.policy</field>
+		<field name="arch" type="xml">
+			<tree string="Policy" decoration-warning="state == 'in_way'"
+				decoration-info="state == 'destination'" decoration-success="state == 'received'">
+				<field name="name" />
+				<field name="place_from" string="From" />
+				<field name="place_dest" string="Destination" />
+				<field name="sender_id" />
+				<field name="recipient_id" />
+				<field name="create_date" />
+				<field name="progress" widget="progressbar"
+					states='new,validated,source,in_way,destination,received' />
+				<field name="state" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="policy_search_view">
+		<field name="name">policy.search</field>
+		<field name="model">freight_sys.policy</field>
+		<field name="arch" type="xml">
+			<search>
+				<field name="name" />
+				<field name="recipient_identif" string="Recepient identification N°" />
+				<field name="recipient_mobile" string="Recepient mobile N°" />
+				<field name="sender_identif" string="Sender identification N°" />
+				<field name="sender_mobile" string="Sender mobile N°" />
+				<field name="freight_ids" filter_domain="[('freight_ids.name', 'ilike', self)]" />
+			</search>
+		</field>
+	</record>
+
+	<record id="policy_action" model="ir.actions.act_window">
+		<field name="name">Policy</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">freight_sys.policy</field>
+		<field name="view_type">form</field>
+		<!-- <field name="view_id" ref="policy_form_view" /> -->
+		<field name="view_mode">tree,form</field>
+		<field name="target">current</field>
+		<field name="help" type="html">
+			<p class="oe_view_nocontent_create">
+				Click to add a new policy.
+			</p>
+			<p>
+				Rawahel freight system helps you schedule and efficiently organize
+				your bills...
+			</p>
+		</field>
+	</record>
+</odoo>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="web_rtl.layout" inherit_id="web.layout" name="RTL Layout">
+            <xpath expr="//html/head/t" position="after">
+                <link t-if="lang_direction == 'rtl'" href="/web_rtl/static/src/css/bootstrap-rtl.min.css" rel="stylesheet"/>
+                <link t-if="lang_direction == 'rtl'" href="/web_rtl/static/src/css/rtl.css" rel="stylesheet"/>
+                <style t-if="lang_font == 'font1'">
+                    *:not(.fa),.nvd3 text{font-family: 'Stc', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'Stc', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font2'">
+                    *:not(.fa),.nvd3 text{font-family: 'GE SS', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'GE SS', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font3'">
+                    *:not(.fa),.nvd3 text{font-family: 'GE SS Two', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'GE SS Two', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font4'">
+                    *:not(.fa),.nvd3 text{font-family: 'Droid Arabic Kufi', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'Droid Arabic Kufi', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font5'">
+                    *:not(.fa),.nvd3 text{font-family: 'Jazeera', serif !important;font-weight: bold;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'Jazeera', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font6'">
+                    *:not(.fa),.nvd3 text{font-family: 'GE SS Unique', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'GE SS Unique', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font7'">
+                    *:not(.fa),.nvd3 text{font-family: 'JF Flat', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'JF Flat', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font8'">
+                    *:not(.fa),.nvd3 text{font-family: 'Frutiger LT Arabic', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'Frutiger LT Arabic', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font9'">
+                    *:not(.fa),.nvd3 text{font-family: 'DIN Next LT W23', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'DIN Next LT W23', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font10'">
+                    *:not(.fa),.nvd3 text{font-family: 'Boutros Asma', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'Boutros Asma', serif !important;
+                    }
+                </style>
+                <style t-if="lang_font == 'font11'">
+                    *:not(.fa),.nvd3 text{font-family: 'Ara ES Nawar', serif !important;}
+                    .rtl  .oe_form input[type="text"], .rtl  .oe_form input[type="password"], .rtl  .oe_form input[type="file"], .rtl  .oe_form select, .rtl  .oe_form textarea{
+                        font-family: 'Ara ES Nawar', serif !important;
+                    }
+                </style>
+            </xpath>
+            <xpath expr="//html" position="before">
+                <t t-set="body_classname" t-value="lang_direction + ' ' + (body_classname or '')"/>
+            </xpath>
+        </template>
+      <!--  <template id="pos_assets" name="POS assets" inherit_id="point_of_sale.assets">
+			<xpath expr="link[last()]" position="after">
+				<link t-if="lang_direction == 'rtl'" href="/web_rtl/static/src/css/pos.css" rel="stylesheet"/>
+			    <link t-if="lang_direction == 'rtl'" href="/web_rtl/static/src/css/bootstrap-rtl.min.css" rel="stylesheet"/>
+                <link t-if="lang_direction == 'rtl'" href="/web_rtl/static/src/css/rtl.css" rel="stylesheet"/>
+            </xpath>
+		</template>  -->
+        <!--<template id="menu_2" inherit_id="odoo_entreprise_theme_v10.menu">-->
+            <!--<xpath expr="//i[@class='fa fa-lg fa-chevron-left']" position="replace">-->
+                <!--<t t-if="lang_direction == 'rtl'">-->
+                    <!--<i class="fa fa-lg fa-chevron-right"/>-->
+                <!--</t>-->
+            <!--</xpath>-->
+        <!--</template>-->
+    </data>
+</odoo>

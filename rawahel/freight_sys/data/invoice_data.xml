@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="product.product_ship" model="product.product">
+			<field name="type">service</field>
+			<field name="name">الشحن</field>
+			<field name="payee">sender</field>
+		</record>
+
+		<record id="product.product_delivery" model="product.product">
+			<field name="type">service</field>
+			<field name="name">التوصيل</field>
+			<field name="payee">recipient</field>
+		</record>
+	</data>
+</odoo> 
